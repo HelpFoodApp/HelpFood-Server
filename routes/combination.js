@@ -38,8 +38,7 @@ router.post('/post',async(req,res,next)=>{
                     CombinationName: combination[0].name
                 }
             });
-            console.log('sex');
-            console.log(review);
+            
             if(review){
                 await Review.update({
                     count:review.count+1
