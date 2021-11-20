@@ -79,7 +79,7 @@ router.get('/:main/list',async(req,res,next)=>{
                 order: 'count desc'
                 
             },
-            attributes:['name'],
+            attributes:['name','link'],
             distinct:true,
             where:{
                 main:req.params.main
