@@ -1,6 +1,6 @@
 const express =require('express');
 
-const {isLoggedIn} = require('./middlwares');
+const {verifyToken} = require('./middlwares');
 const {User,Hashtag} = require('../models');
 const { sequelize } = require('../models');
 const Op = sequelize.Op;
@@ -8,7 +8,7 @@ const Op = sequelize.Op;
 const router = express.Router();
 
 //선호하는 메뉴 선택
-router.post('/choice',isLoggedIn,async(req,res,next)=>{
+router.post('/choice',verifyToken,async(req,res,next)=>{
     try{
         const user = await User.findOne({
             where:{
@@ -33,7 +33,7 @@ router.post('/choice',isLoggedIn,async(req,res,next)=>{
 })
 
 //내가 선택한 메뉴 확인
-router.get('/my',isLoggedIn,async(req,res,next) => {
+router.get('/my',verifyToken,async(req,res,next) => {
     try{
         const user = await User.findOne({
             where:{
@@ -108,7 +108,7 @@ router.get('/:hashtag/taste',async(req,res,next)=>{
 });
 
 //취향 업데이트
-router.post('/rechoice',isLoggedIn,async(req,res,next)=>{
+router.post('/rechoice',verifyToken,async(req,res,next)=>{
     try{
         const user = await User.findOne({
             where:{
