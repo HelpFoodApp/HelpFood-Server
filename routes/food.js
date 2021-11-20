@@ -17,7 +17,6 @@ router.post('/choice',verifyToken,async(req,res,next)=>{
         });
 
         for(let food of req.body.foods){
-            console.log(food);
             await user.addFood(food);
         };
 
@@ -41,9 +40,8 @@ router.get('/my',verifyToken,async(req,res,next) => {
             }
         });
         if(user){
-            const food = await user.getFood({
-                attributes:['name']
-            });
+            const food = await user.getFood({});
+            console.log(food);
             const datas = food.map(i => i.name);
             
             const [result,metadata] = await sequelize.query(
@@ -55,7 +53,7 @@ router.get('/my',verifyToken,async(req,res,next) => {
 
             res.json({
                 code:200,
-                food:food.map(i=>i.name),
+                food:food,
                 count:food.length,
                 combination: result[0].count
             })
@@ -107,7 +105,6 @@ router.get('/:hashtag/taste',async(req,res,next)=>{
     }
 });
 
-//취향 업데이트
 router.post('/rechoice',verifyToken,async(req,res,next)=>{
     try{
         const user = await User.findOne({
@@ -132,7 +129,7 @@ router.post('/rechoice',verifyToken,async(req,res,next)=>{
         console.error(error);
         next(error);
     }
-});
+})
 
 
 module.exports = router;
